@@ -1,0 +1,33 @@
+{
+    "opts": {
+        "destination": "./public/",
+        "encoding": "utf8",
+        "readme": "./README.md",
+        "recurse": true,
+        "template": "node_modules/docdash"
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "source": {
+        "include": [ "src" ],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "recurseDepth": 10,
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": false
+    },
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    },
+    "docdash": {
+        "search": true,
+        "meta": {
+            "title": "Documentation for test-containers"
+        },
+        "scripts": [ "https://unpkg.com/mermaid/dist/mermaid.js", "docs-init.js" ]
+    }
+}

@@ -1,0 +1,32 @@
+{
+    "name": "test-containers",
+    "version": "0.0.1",
+    "description": "Wrapper around the dockerode library to manipulate Docker containers in NodeJS test environments.",
+    "author": {
+        "name": "darthcav",
+        "url": "https://github.com/darthcav"
+    },
+    "type": "module",
+    "exports": "./src/index.js",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "dockerode": "4.0.2",
+        "imergo-logger": "8.5.0"
+    },
+    "devDependencies": {
+        "clean-jsdoc-theme": "4.2.18",
+        "docdash": "2.0.2",
+        "jsdoc": "4.0.3"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com//darthcav/test-containers.git"
+    },
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "docs": "jsdoc -c ./jsdoc.json",
+        "test": "node --test --test-reporter=spec"
+    }
+}
