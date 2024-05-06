@@ -1,10 +1,10 @@
 import { env, exit } from "node:process"
 import { equal, ok } from "node:assert/strict"
-import { after, before, suite, test } from "node:test"
+import { after, before, describe, test } from "node:test"
 import Docker from "dockerode"
 import pullImage from "../src/pullImage.js"
 
-suite("#Test suite for the test-containers module", function () {
+describe("#Test suite for the test-containers module", function () {
     const imageName = "alpine:latest"
     let docker
 
