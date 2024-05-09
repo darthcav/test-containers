@@ -14,7 +14,7 @@
         "imergo-logger": "8.5.0"
     },
     "devDependencies": {
-        "clean-jsdoc-theme": "4.2.18",
+        "clean-jsdoc-theme": "4.3.0",
         "docdash": "2.0.2",
         "jsdoc": "4.0.3"
     },
