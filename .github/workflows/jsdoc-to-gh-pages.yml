@@ -29,7 +29,8 @@ jobs:
       - name: Generate JSDoc
         run: npm run docs
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
-          github_token: ${{ secrets.GH_PAGES_TOKEN }}
-          publish_dir: ./public  # replace with your JSDoc output directory if different
+          token: ${{ secrets.GH_PAGES_TOKEN }}
+          branch: gh-pages  # The branch the action should deploy to.
+          folder: public
