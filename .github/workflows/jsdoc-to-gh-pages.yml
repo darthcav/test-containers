@@ -45,8 +45,7 @@ jobs:
         with:
           ref: gh-pages
           repository: ${{ github.repository }}
-          github-server-url: "https://${{ env.GITHUB_ACTOR }}:${{ secrets.GH_PAGES_TOKEN }}@github.com"
-          token: "${{ secrets.GH_PAGES_TOKEN }}"
+          token: ${{ github.token }}
       - name: Clear existing content (optional)
         run: rm -rf ./public  # This will remove all existing files in the gh-pages branch
       - name: Download artifact
