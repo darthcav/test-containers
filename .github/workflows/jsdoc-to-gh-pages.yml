@@ -55,9 +55,9 @@ jobs:
           path: ./public
       - name: Commit changes
         run: |
-          git config credential.helper store  # Enable credential helper (one-time setup)
-          git config credential.helper 'store -s {{ GITHUB_ACTOR }}'  # Store credentials securely with username
-          echo "https://darthcav:{{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials  # Update credentials file (not recommended for sharing)
+          git config credential.helper store
+          git config credential.helper 'store -s {{ GITHUB_ACTOR }}'
+          echo "https://darthcav:{{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials
           git config user.name {{ GITHUB_ACTOR }}
           git config user.email {{ secrets.ACTOR_EMAIL }
           git add .
