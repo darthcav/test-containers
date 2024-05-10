@@ -55,8 +55,6 @@ jobs:
           path: ./public
       - name: Commit and push to gh-pages
         run: |
-          git config credential.helper store
-          echo "https://${{ github.actor }}:${{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials
           git config user.name ${{ github.actor }}
           git config user.email ${{ secrets.ACTOR_EMAIL }}
           git add .
