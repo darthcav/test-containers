@@ -56,8 +56,8 @@ jobs:
       - name: Commit and push to gh-pages
         run: |
           git config credential.helper store
-          echo "https://${{ env.GITHUB_ACTOR }}:${{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials
-          git config user.name ${{ env.GITHUB_ACTOR }}
+          echo "https://${{ github.actor }}:${{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials
+          git config user.name ${{ github.actor }}
           git config user.email ${{ secrets.ACTOR_EMAIL }}
           git add .
           git commit -m "Deploy JSDoc documentation"
