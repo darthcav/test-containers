@@ -57,7 +57,7 @@ jobs:
         run: |
           git config credential.helper store
           echo "https://darthcav:${{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials
-          git config user.name ${{ GITHUB_ACTOR }}
+          git config user.name ${{ env.GITHUB_ACTOR }}
           git config user.email ${{ secrets.ACTOR_EMAIL }}
           git add .
           git commit -m "Deploy JSDoc documentation"
