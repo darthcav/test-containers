@@ -28,6 +28,11 @@ jobs:
         run: npm run build --if-present
       - name: Generate JSDoc
         run: npm run docs
+      - name: Create artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: public
+          path: ./public
 
   deploy:
     needs: build
@@ -43,8 +48,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Clear existing content (optional)
         run: rm -rf ./public  # This will remove all existing files in the gh-pages branch
-      - name: Copy docs to gh-pages
-        run: cp -r ./public/* .  # Copy generated documentation to the branch
+      - name: Download artifact
+        uses: actions/download-artifact@v4.1.7
+        with:
+          name: public
+          path: ./public
       - name: Commit changes
         run: |
           git config user.name "darthcav"
