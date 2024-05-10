@@ -45,7 +45,8 @@ jobs:
         with:
           ref: gh-pages
           repository: ${{ github.repository }}
-          token: ${{ secrets.GH_PAGES_TOKEN }}
+          ssh-user: ${{ env.GITHUB_ACTOR }}
+          token: "${{ secrets.GH_PAGES_TOKEN }}"
       - name: Clear existing content (optional)
         run: rm -rf ./public  # This will remove all existing files in the gh-pages branch
       - name: Download artifact
@@ -56,10 +57,9 @@ jobs:
       - name: Commit and push to gh-pages
         run: |
           git config credential.helper store
-          echo "https://darthcav:${{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials
+          echo "https://${{ env.GITHUB_ACTOR }}:${{ secrets.GH_PAGES_TOKEN }}@github.com" > ~/.git-credentials
           git config user.name ${{ env.GITHUB_ACTOR }}
           git config user.email ${{ secrets.ACTOR_EMAIL }}
           git add .
           git commit -m "Deploy JSDoc documentation"
           git push origin gh-pages
-
