@@ -45,7 +45,7 @@ jobs:
         with:
           ref: gh-pages
           repository: ${{ github.repository }}
-          ssh-user: ${{ env.GITHUB_ACTOR }}
+          github-server-url: "https://${{ env.GITHUB_ACTOR }}:${{ secrets.GH_PAGES_TOKEN }}@github.com"
           token: "${{ secrets.GH_PAGES_TOKEN }}"
       - name: Clear existing content (optional)
         run: rm -rf ./public  # This will remove all existing files in the gh-pages branch
