@@ -1,6 +1,6 @@
 {
     "opts": {
-        "destination": "./public/",
+        "destination": "./docs/",
         "encoding": "utf8",
         "readme": "./README.md",
         "recurse": true,
