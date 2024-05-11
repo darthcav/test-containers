@@ -13,11 +13,10 @@ const __logger = Logger("test-containers")
  * @async
  * @function startContainer
  * @param {Object} params - The parameters for starting the container.
- * @default params = { docker: new Docker({ socketPath: "/var/run/docker.sock" }), logger: Logger("test-containers"), containerOptions: {} }
- * @param {Docker} params.docker - The Dockerode instance.
- * @param {Logger} params.logger - The Logger instance.
+ * @param {Docker} [params.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
+ * @param {Logger} [params.logger = Logger("test-containers")] - The Logger instance.
+ * @param {Object} [params.containerOptions = {}] - The options for creating the container.
  * @param {string} params.imageName - The name of the Docker image to use.
- * @param {Object} params.containerOptions - The options for creating the container.
  * @returns {Promise<void>} A promise that resolves when container is successfully started, or rejects with an error.
  *
  * @example
@@ -46,7 +45,7 @@ const __logger = Logger("test-containers")
  *   console.error("Error starting container:", error);
  * });
  */
-export default async function startContainer({ docker= __docker, logger= __logger, imageName, containerOptions= {} })
+export default async function startContainer({ docker= __docker, logger= __logger, containerOptions= {}, imageName })
 {
     let container
     let images = await docker.listImages({

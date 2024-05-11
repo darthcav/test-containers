@@ -12,9 +12,8 @@ const __logger = Logger("test-containers")
  * @async
  * @function pullImage
  * @param {Object} params - The parameters for pulling the image.
- * @default params = { docker: new Docker({ socketPath: "/var/run/docker.sock" }), logger: Logger("test-containers")}
- * @param {Docker} params.docker - The Dockerode instance.
- * @param {Logger} params.logger - The Logger instance.
+ * @param {Docker} [params.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
+ * @param {Logger} [params.logger = Logger("test-containers")] - The Logger instance.
  * @param {string} params.imageName - The name of the Docker image to pull.
  * @returns {Promise<void>} A promise that resolves when the image is successfully pulled, or rejects with an error.
  *

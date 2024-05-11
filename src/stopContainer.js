@@ -12,9 +12,8 @@ const __logger = Logger("test-containers")
  * @async
  * @function stopContainer
  * @param {Object} params - The parameters for stopping the container. Default: {}.
- * @default params = { docker: new Docker({ socketPath: "/var/run/docker.sock" }), logger: Logger("test-containers")}
- * @param {Docker} params.docker - The Dockerode instance.
- * @param {Logger} params.logger - The Logger instance.
+ * @param {Docker} [params.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
+ * @param {Logger} [params.logger = Logger("test-containers")] - The Logger instance.
  * @param {string} params.containerName - The name of the Docker container to stop. No default value.
  * @returns {Promise<void|Error>} A promise that resolves when the container is successfully stopped and removed, or rejects with an error if the container cannot be stopped or removed.
  *
