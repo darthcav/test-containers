@@ -1,9 +1,10 @@
 test-containers
 ===============
 
+[![NPM Version][npm-image]][npm-url]
 ![Node][node-version]
 
-Wrapper around the [dockerode](https://github.com/apocas/dockerode) library to manipulate Docker containers in NodeJS test environments.
+Wrapper around the [dockerode](https://github.com/apocas/dockerode) library to manipulate Docker containers in Node.js test environments.
 
 ## Install
 
@@ -32,3 +33,5 @@ The documentation is available online at: [https://darthcav.github.io/test-conta
 [Apache 2.0](LICENSE.txt).
 
 [node-version]: https://img.shields.io/badge/node-20-orange.svg?style=flat-square
+[npm-image]: https://img.shields.io/badge/npm-0.1.0-blue.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/@darthcav/test-containers
