@@ -9,6 +9,8 @@ const __logger = Logger("test-containers")
 /**
  * Runs an application in a Docker container.
  *
+ * @async
+ * @function runApplication
  * @param {Object} options - The options for running the application.
  * @param {Docker} [options.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Docker instance to use.
  * @param {Logger} [options.logger = Logger("test-containers")] - The logger to use.
@@ -17,6 +19,20 @@ const __logger = Logger("test-containers")
  * @param {string} [options.scriptRootDir = "/root"] - The root directory in the container to place and expand the archive.
  * @param {Object} options.execOptions - The options for executing the application in the container.
  * @returns {Promise<string|Error>} A promise that resolves with the output of the script, or rejects with an error.
+ *
+ * @example
+ * const scriptReadStream = fs.createReadStream('/path/to/your/script.tar.gz');
+ * const execOptions = {
+ *   Cmd: ['node', 'yourScript.js'],
+ *   AttachStdout: true,
+ *   AttachStderr: true
+ * };
+ * runApplication({
+ *   docker,
+ *   containerName: 'myContainer',
+ *   scriptReadStream,
+ *   execOptions
+ * }).then(console.log).catch(console.error);
  */
 export default async function runApplication({
         docker= __docker,
