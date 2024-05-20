@@ -11,7 +11,8 @@
     "license": "Apache-2.0",
     "dependencies": {
         "dockerode": "4.0.2",
-        "imergo-logger": "8.5.0"
+        "imergo-logger": "8.5.0",
+        "tar": "7.1.0"
     },
     "devDependencies": {
         "clean-jsdoc-theme": "4.3.0",

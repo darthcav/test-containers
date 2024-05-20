@@ -11,10 +11,11 @@ const __logger = Logger("test-containers")
  *
  * @async
  * @function stopContainer
- * @param {Object} params - The parameters for stopping the container. Default: {}.
- * @param {Docker} [params.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
- * @param {Logger} [params.logger = Logger("test-containers")] - The Logger instance.
- * @param {string} params.containerName - The name of the Docker container to stop. No default value.
+ * @param {Object} options - The parameters for stopping the container. Default: {}.
+ * @param {Docker} [options.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
+ * @param {Logger} [options.logger = Logger("test-containers")] - The Logger instance.
+ * @param {boolean} [options.removeContainer = false] - A boolean indicating whether to remove the container after stopping it. Default: false.
+ * @param {string} options.containerName - The name of the Docker container to stop. No default value.
  * @returns {Promise<void|Error>} A promise that resolves when the container is successfully stopped and removed, or rejects with an error if the container cannot be stopped or removed.
  *
  * @example
@@ -23,12 +24,12 @@ const __logger = Logger("test-containers")
  *   logger: Logger("my-logger"),
  *   containerName: "my-container",
  * }).then(() => {
- *   console.log("Container stopped successfully");
+ *   console.log("Container stopped successfully")
  * }).catch(error => {
  *   console.error("Error stopping container:", error);
  * });
  */
-export default async function stopContainer({ docker= __docker, logger= __logger, containerName })
+export default async function stopContainer({ docker= __docker, logger= __logger, removeContainer= false, containerName })
 {
     logger.info(`Stopping ${containerName} container`)
     const containers = await docker.listContainers({
@@ -43,9 +44,12 @@ export default async function stopContainer({ docker= __docker, logger= __logger
         return container.stop()
             .then(() => {
                 logger.info(`${containerName} container stopped`)
-                return container.remove()
+                if (removeContainer)
+                {
+                    logger.info(`Removing container ${containerName} ...`)
+                    return container.remove()
+                }
             })
-            .then(() => logger.info(`${containerName} container removed`))
             .catch(error => error)
     }
 }

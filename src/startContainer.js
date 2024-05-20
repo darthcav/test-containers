@@ -12,12 +12,12 @@ const __logger = Logger("test-containers")
  *
  * @async
  * @function startContainer
- * @param {Object} params - The parameters for starting the container.
- * @param {Docker} [params.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
- * @param {Logger} [params.logger = Logger("test-containers")] - The Logger instance.
- * @param {Object} [params.containerOptions = {}] - The options for creating the container.
- * @param {string} params.imageName - The name of the Docker image to use.
- * @returns {Promise<void>} A promise that resolves when container is successfully started, or rejects with an error.
+ * @param {Object} options - The parameters for starting the container.
+ * @param {Docker} [options.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
+ * @param {Logger} [options.logger = Logger("test-containers")] - The Logger instance.
+ * @param {Object} [options.containerOptions = {}] - The options for creating the container.
+ * @param {string} options.imageName - The name of the Docker image to use.
+ * @returns {Promise<void|Error>} A promise that resolves when container is successfully started, or rejects with an error.
  *
  * @example
  * startContainer({
@@ -40,7 +40,7 @@ const __logger = Logger("test-containers")
  *     }
  *   }
  * }).then(container => {
- *   console.log("Container started:", container);
+ *   console.log("Container started:", container)
  * }).catch(error => {
  *   console.error("Error starting container:", error);
  * });
@@ -84,14 +84,18 @@ export default async function startContainer({ docker= __docker, logger= __logge
                 ...containerOptions
             })
             .then(container => container.start())
-            .then(() => logger.info(`Success starting ${containerOptions?.name} container`))
+            .then(() => {
+                logger.info(`Success starting ${containerOptions?.name} container`)
+            })
             .catch(error => error)
     }
     else if (containers[ 0 ]?.State !== "running")
     {
         container = docker.getContainer(containers[ 0 ].Id)
         return container.start()
-            .then(() => logger.info(`Success starting ${containerOptions?.name} container`))
+            .then(() => {
+                logger.info(`Success starting ${containerOptions?.name} container`)
+            })
             .catch(error => error)
     }
     logger.info(`Success starting ${containerOptions?.name} container`)
