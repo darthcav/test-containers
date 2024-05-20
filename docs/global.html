@@ -34,7 +34,7 @@
     <input type="text" id="nav-search" placeholder="Search" />
     
     
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#pullImage">pullImage</a></li><li><a href="global.html#startContainer">startContainer</a></li><li><a href="global.html#stopContainer">stopContainer</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#pullImage">pullImage</a></li><li><a href="global.html#runApplication">runApplication</a></li><li><a href="global.html#startContainer">startContainer</a></li><li><a href="global.html#stopContainer">stopContainer</a></li></ul>
     
 </nav>
 
@@ -437,6 +437,438 @@
     <dd>
         
 <span class="param-type">Promise.&lt;(void|Error)></span>
+
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="runApplication"><span class="type-signature type-signature-async">(async) </span>runApplication<span class="signature">(options)</span><span class="type-signature"> &rarr; {Promise.&lt;(string|Error)>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+    
+    <dt class="tag-description">Description:</dt>
+    <dd class="tag-description"><ul class="dummy"><li><p>Runs an application in a Docker container.</p></li></ul></dd>
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="runApplication.js.html">runApplication.js</a>, <a href="runApplication.js.html#line9">line 9</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+    <h5 class="h5-examples">Example</h5>
+    
+    <pre class="prettyprint"><code>const scriptReadStream = fs.createReadStream('/path/to/your/script.tar.gz');
+const execOptions = {
+  Cmd: ['node', 'yourScript.js'],
+  AttachStdout: true,
+  AttachStderr: true
+};
+runApplication({
+  docker,
+  containerName: 'myContainer',
+  scriptReadStream,
+  execOptions
+}).then(console.log).catch(console.error);</code></pre>
+
+
+
+
+    <h5 class="h5-parameters">Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The options for running the application.</p>
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>docker</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Docker</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>new Docker({ socketPath: "/var/run/docker.sock" })</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The Docker instance to use.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logger</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Logger</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>Logger("test-containers")</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The logger to use.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>containerName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The name of the container to run the application in.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scriptReadStream</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReadableStream</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The readable stream of the compressed file containing the application to run.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scriptRootDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>"/root"</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The root directory in the container to place and expand the archive.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>execOptions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The options for executing the application in the container.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5 class="h5-returns">Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>A promise that resolves with the output of the script, or rejects with an error.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;(string|Error)></span>
 
 
 
@@ -1196,7 +1628,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.3</a> on Mon May 20 2024 08:37:55 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.3</a> on Mon May 20 2024 08:53:24 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
 </footer>
 
 <script>prettyPrint();</script>
