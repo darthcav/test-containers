@@ -21,15 +21,15 @@ const __logger = Logger("test-containers")
  * @returns {Promise<string|Error>} A promise that resolves with the output of the script, or rejects with an error.
  *
  * @example
- * const scriptReadStream = fs.createReadStream('/path/to/your/script.tar.gz');
+ * const scriptReadStream = fs.createReadStream("/path/to/your/script.tar.gz");
  * const execOptions = {
- *   Cmd: ['node', 'yourScript.js'],
+ *   Cmd: ["node", "yourScript.js"],
  *   AttachStdout: true,
  *   AttachStderr: true
  * };
  * runApplication({
  *   docker,
- *   containerName: 'myContainer',
+ *   containerName: "myContainer",
  *   scriptReadStream,
  *   execOptions
  * }).then(console.log).catch(console.error);
