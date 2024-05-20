@@ -19,9 +19,18 @@
         "docdash": "2.0.2",
         "jsdoc": "4.0.3"
     },
+    "files": [
+        "/src",
+        "/test",
+        "jsdoc.json",
+        "package.json",
+        "package-lock.json",
+        "README.md",
+        "LICENSE.txt"
+    ],
     "repository": {
         "type": "git",
-        "url": "https://github.com//darthcav/test-containers.git"
+        "url": "https://github.com/darthcav/test-containers.git"
     },
     "engines": {
         "node": ">=20"

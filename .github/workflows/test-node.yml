@@ -4,9 +4,11 @@ name: Test Node.js app in CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches:
+      - dev
   pull_request:
-    branches: [ "dev" ]
+    branches:
+      - dev
 
 jobs:
   test:
@@ -14,7 +16,9 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 20.x, 22.x ]
+        node-version:
+          - 20.x
+          - 22.x
 
     steps:
       - name: Checkout code

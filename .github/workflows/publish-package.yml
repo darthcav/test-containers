@@ -1,0 +1,30 @@
+name: Publish package in NPM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version:
+          - 22.x
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.5
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Login to npm with secret token
+        run: npm login --scope=@darthcav --registry=https://registry.npmjs.org
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish package in NPM
+        run: npm publish --access public
