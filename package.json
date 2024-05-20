@@ -1,6 +1,6 @@
 {
     "name": "@darthcav/test-containers",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Wrapper around the dockerode library to manipulate Docker containers in NodeJS test environments.",
     "author": {
         "name": "darthcav",
