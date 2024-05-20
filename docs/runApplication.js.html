@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>stopContainer.js - Documentation for test-containers</title>
+    <title>runApplication.js - Documentation for test-containers</title>
     
     
     
@@ -40,7 +40,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">stopContainer.js</h1>
+    <h1 class="page-title">runApplication.js</h1>
     
 
     
@@ -59,31 +59,26 @@ const __docker = new Docker({
 const __logger = Logger("test-containers")
 
 /**
- * Stops a Docker container using Dockerode.
+ * Runs an application in a Docker container.
  *
- * @async
- * @function stopContainer
- * @param {Object} options - The parameters for stopping the container. Default: {}.
- * @param {Docker} [options.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Dockerode instance.
- * @param {Logger} [options.logger = Logger("test-containers")] - The Logger instance.
- * @param {boolean} [options.removeContainer = false] - A boolean indicating whether to remove the container after stopping it. Default: false.
- * @param {string} options.containerName - The name of the Docker container to stop. No default value.
- * @returns {Promise&lt;void|Error>} A promise that resolves when the container is successfully stopped and removed, or rejects with an error if the container cannot be stopped or removed.
- *
- * @example
- * stopContainer({
- *   docker: new Docker(),
- *   logger: Logger("my-logger"),
- *   containerName: "my-container",
- * }).then(() => {
- *   console.log("Container stopped successfully")
- * }).catch(error => {
- *   console.error("Error stopping container:", error);
- * });
+ * @param {Object} options - The options for running the application.
+ * @param {Docker} [options.docker = new Docker({ socketPath: "/var/run/docker.sock" })] - The Docker instance to use.
+ * @param {Logger} [options.logger = Logger("test-containers")] - The logger to use.
+ * @param {string} options.containerName - The name of the container to run the application in.
+ * @param {ReadableStream} options.scriptReadStream - The readable stream of the compressed file containing the application to run.
+ * @param {string} [options.scriptRootDir = "/root"] - The root directory in the container to place and expand the archive.
+ * @param {Object} options.execOptions - The options for executing the application in the container.
+ * @returns {Promise&lt;string|Error>} A promise that resolves with the output of the script, or rejects with an error.
  */
-export default async function stopContainer({ docker= __docker, logger= __logger, removeContainer= false, containerName })
-{
-    logger.info(`Stopping ${containerName} container`)
+export default async function runApplication({
+        docker= __docker,
+        logger= __logger,
+        containerName,
+        scriptReadStream,
+        scriptRootDir= "/root",
+        execOptions
+    }) {
+    logger.info(`Running script in ${containerName} container`)
     const containers = await docker.listContainers({
         filters: {
             name: [ containerName ],
@@ -93,17 +88,36 @@ export default async function stopContainer({ docker= __docker, logger= __logger
     if (containers.length)
     {
         const container = docker.getContainer(containers[ 0 ].Id)
-        return container.stop()
-            .then(() => {
-                logger.info(`${containerName} container stopped`)
-                if (removeContainer)
-                {
-                    logger.info(`Removing container ${containerName} ...`)
-                    return container.remove()
-                }
-            })
-            .catch(error => error)
+        logger.info(`Using existing container: ${container.id}`)
+        logger.info(`Uploading file to container`)
+        await container.putArchive(scriptReadStream, { path: scriptRootDir })
+        return executeInContainer(container, execOptions)
     }
+}
+
+async function executeInContainer(container, execOptions) {
+    const __execOptions = {
+        AttachStderr: true,
+        AttachStdout: true,
+        ...execOptions
+    }
+
+    const exec = await container.exec(__execOptions)
+    return new Promise(async (resolve, reject) => {
+        return exec.start({}, (error, stream) => {
+                if(error)
+                {
+                    return reject(error)
+                }
+                let output = ""
+                stream.on("data", chunk => output += chunk.toString().replace(/[^\w\s]/gi, ""))
+                stream.on("end", async () => {
+                    return resolve(output)
+                })
+                // stream.on("finish", () => stream.socket.exit())
+                stream.on("error", error => reject(error))
+            })
+    })
 }
 </code></pre>
         </article>
